@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 async function main() {
   // ---------- Admin user ----------
   const adminEmail = process.env.ADMIN_EMAIL || 'admin@sajadweb.dev';
-  const adminPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD|| 'admin12345', 10);
+  const adminPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD || 'admin12345', 10);
   await prisma.user.upsert({
     where: { email: adminEmail },
     update: { role: 'ADMIN' },
@@ -23,7 +23,7 @@ async function main() {
   const projects = [
     {
       slug: 'buluro',
-      coverImage: '/legacy/assets/images/portfolio/buluro/logo.webp',
+      coverImage: '/images/portfolio/buluro/logo.webp',
       url: 'https://buluro.com',
       role: 'Senior Backend Developer',
       year: '2024',
@@ -48,7 +48,7 @@ async function main() {
     },
     {
       slug: 'nftull',
-      coverImage: '/legacy/assets/images/portfolio/nftull/b1.png',
+      coverImage: '/images/portfolio/nftull/hero.png',
       url: 'https://opensea.io/collection/thelastraptor',
       role: 'Full Stack Developer',
       year: '2022',
@@ -71,8 +71,37 @@ async function main() {
       },
     },
     {
+      slug: 'prokey',
+      coverImage: '/images/portfolio/prokey/b2.JPG',
+      url: "https://prokey.io",
+      role: 'Full Stack Developer',
+      year: '2022',
+      en: {
+        title: "Secure Hardware Wallet for Bitcoin, ETH, USDT and all crypto | Prokey",
+        category: 'Hardware Wallet',
+        location: 'Malaysia',
+        excerpt:
+          'A cloud-based CRM platform serving 1000+ businesses, unifying operations and boosting productivity.',
+        body: '<p>Led frontend (React + Ant Design) and backend (NestJS) teams. Designed modular microservice architecture, established CI/CD pipelines with Docker, and integrated FCM for real-time notifications.</p>',
+        techStack: 'NestJS, React, Docker, Firebase, Microservices',
+      },
+      fa: {
+        title: 'Prokey  کیف پول سخت افزاری ',
+        category: 'Hardware Wallet',
+        location: 'Malaysia',
+        excerpt:'',
+        body: `محافظت از کلید خصوصی شما یک مسئله مهم در ارزهای رمزنگاری شده است ،
+    کیف پول سخت افزاری 
+    Prokey
+    یک دستگاه آفلاین و ذخیره سازی ایمن است که کلید خصوصی شما را به صورت آفلاین محافظت می کند 
+    ، در حالی که شما را قادر می سازد تا دریافت ، ذخیره و امضای تراکنش ها را برای ارسال دارایی های دیجیتالی مانند بیت کوین ، اتریوم ، لایت کوین ، Tether و بسیاری دیگر!
+`,
+        techStack: 'Typescript, C, C++, Vue, React',
+      },
+    },
+    {
       slug: 'sakok',
-      coverImage: '/legacy/assets/images/portfolio/sakok/b1.jpeg',
+      coverImage: '/images/portfolio/sakok/hero.jpeg',
       url: 'https://sakok.com',
       role: 'Chief Technology Officer',
       year: '2022',
@@ -144,7 +173,7 @@ async function main() {
     },
     {
       slug: '24ipay',
-      coverImage: '/legacy/assets/images/portfolio/ipay/logo.png',
+      coverImage: '/images/portfolio/ipay/logo.png',
       url: 'https://24ipay.ir',
       role: 'Backend Developer → Team Lead',
       year: '2016',
