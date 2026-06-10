@@ -1,5 +1,5 @@
-var baseimage = '/assets/images/portfolio/';
-var link = '/pages/';
+var baseimage = 'https://sajadweb.github.io/me/assets/images/portfolio/';
+var link = 'https://sajadweb.github.io/me/pages/';
 var $portfolio = [
       {
             "id": "nftull",
