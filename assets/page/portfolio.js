@@ -2,6 +2,28 @@ var baseimage = '/assets/images/portfolio/';
 var link = '/pages/';
 var $portfolio = [
       {
+            "id": "buluro",
+            "link": `${link}buluro.html`,
+            "title": "buluro",
+            'location': "Türkiye",
+            "category": "Backend Developer",
+            'name': "سجاد محمدی نژاد",
+            'date': "1403 فروردین",
+            'img': baseimage + "buluro/logo.webp",
+            'description': `"پای تایم یک شبکه اجتماعی می باشد
+            که کمک میکنه شما هدفات رو مدیریت کنی بیس کار با 
+            nodejs | reactjs | react-native
+            پیاده سازی شده که  بعنوان مدیرفنی و بک اند دولوپر در پای تام کار میکنم
+            "`,
+            'content': "",
+            'items': ['node', 'nestjs'],
+            "images": [
+                  baseimage + "buluro/hero2.webp",
+                  baseimage + "buluro/hero3.webp",
+                  baseimage + "buluro/hero1.webp", 
+            ]
+      },
+      {
             "id": "nftull",
             "link": `${link}nftull.html`,
             "title": "nftull",
