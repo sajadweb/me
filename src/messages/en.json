@@ -1,0 +1,258 @@
+{
+  "Metadata": {
+    "title": "Sajjad Mohammadi Nejad — Senior Backend Architect",
+    "description": "Senior Backend Developer building AI-native, scalable systems with NestJS, Go, and modern distributed architectures. Consulting, design, and hands-on courses."
+  },
+  "Nav": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "portfolio": "Work",
+    "courses": "Courses",
+    "blog": "Blog",
+    "contact": "Contact",
+    "login": "Sign in",
+    "dashboard": "Dashboard",
+    "admin": "Admin",
+    "logout": "Sign out",
+    "getStarted": "Get Started"
+  },
+  "Hero": {
+    "badge": "Senior Backend Architect · AI & Distributed Systems",
+    "titlePrefix": "Engineering the",
+    "titleHighlight": "intelligence layer",
+    "titleSuffix": "of modern software.",
+    "subtitle": "I help companies enter the market through internet products, design scalable platforms, and teach modern backend engineering with NestJS and Go.",
+    "ctaPrimary": "Start a project",
+    "ctaSecondary": "Explore courses",
+    "stats": {
+      "experience": "Years building backends",
+      "projects": "Production systems shipped",
+      "students": "Engineers mentored"
+    }
+  },
+  "About": {
+    "title": "About me",
+    "kicker": "Sajjad Mohammadi Nejad",
+    "lead": "Senior Backend Developer with over 15 years of experience building robust, scalable systems with Node.js, NestJS, and Go. I work on microservice architectures, performance optimization with Redis, and modern inter-service communication using RabbitMQ and gRPC, with deep exposure to AI integrations (Ollama, OpenAI), Web3, and CI/CD automation.",
+    "valuesTitle": "How I think",
+    "values": {
+      "architecture": {
+        "title": "Systems thinking",
+        "body": "From monoliths to microservices, I design for the constraints that matter: latency, consistency, and team velocity."
+      },
+      "ai": {
+        "title": "AI-native engineering",
+        "body": "LLM assistants, forecasting engines, and automation pipelines woven directly into the product fabric."
+      },
+      "teaching": {
+        "title": "Knowledge compounding",
+        "body": "I teach what I build so teams become self-sufficient — clean code, TDD, and well-documented systems."
+      }
+    },
+    "stackTitle": "Core stack",
+    "downloadCv": "Download résumé"
+  },
+  "Services": {
+    "title": "What I can do for you",
+    "kicker": "Services",
+    "subtitle": "End-to-end partnership: from market entry strategy to production-grade delivery and training.",
+    "items": {
+      "consulting": {
+        "title": "Market entry consulting",
+        "body": "Strategy for entering the market through internet products — competitive analysis, architecture decisions, and a pragmatic roadmap."
+      },
+      "web": {
+        "title": "Web & app design",
+        "body": "Scalable, modern web and mobile applications designed and engineered with NestJS, Go, and React."
+      },
+      "training": {
+        "title": "Backend training",
+        "body": "Hands-on NestJS and Go courses that take engineers from fundamentals to production microservices."
+      },
+      "ai": {
+        "title": "AI & automation",
+        "body": "LLM-powered assistants, forecasting systems, and process automation with Ollama and OpenAI."
+      },
+      "devops": {
+        "title": "DevOps & CI/CD",
+        "body": "Docker, GitHub Actions, and GitLab CI pipelines that make shipping boring and safe."
+      },
+      "review": {
+        "title": "Architecture review",
+        "body": "Code review, security audits, and performance tuning for existing Node.js and Go systems."
+      }
+    },
+    "ctaTitle": "Have a project in mind?",
+    "ctaBody": "Tell me about your business goals and I'll reply with a concrete next step within 24 hours.",
+    "ctaButton": "Request a consultation"
+  },
+  "Process": {
+    "title": "How we work together",
+    "kicker": "Process",
+    "steps": {
+      "discover": {
+        "title": "Discover",
+        "body": "We map your market, users, and constraints to decide what to build first."
+      },
+      "design": {
+        "title": "Design",
+        "body": "Architecture, data models, and UX are drafted and validated before a line of production code."
+      },
+      "build": {
+        "title": "Build",
+        "body": "Clean, tested, well-documented code shipped through automated CI/CD pipelines."
+      },
+      "scale": {
+        "title": "Scale",
+        "body": "Observability, performance tuning, and training so your team owns the system."
+      }
+    }
+  },
+  "Portfolio": {
+    "title": "Selected work",
+    "kicker": "Portfolio",
+    "subtitle": "A selection of production systems I've designed, built, or led across fintech, logistics, web3, and SaaS.",
+    "viewAll": "View all work",
+    "readMore": "Read case study"
+  },
+  "Courses": {
+    "title": "Backend engineering courses",
+    "kicker": "Learn",
+    "subtitle": "Structured, project-based courses built from real production experience. Enroll to track progress and request 1:1 reviews.",
+    "enroll": "Enroll",
+    "enrolled": "Enrolled",
+    "modules": "modules",
+    "duration": "duration",
+    "level": "level",
+    "viewCourse": "View course",
+    "continue": "Continue learning",
+    "loginToEnroll": "Sign in to enroll",
+    "levels": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "nestjsTitle": "Production NestJS",
+    "nestjsExcerpt": "From modules and dependency injection to microservices, queues, and production-ready APIs.",
+    "golangTitle": "Go for backend engineers",
+    "golangExcerpt": "Build high-performance services with Go: HTTP, gRPC, concurrency, and clean architecture."
+  },
+  "Blog": {
+    "title": "Notes on backend & AI",
+    "kicker": "Blog",
+    "subtitle": "Field notes on architecture, performance, and shipping AI-native products.",
+    "readMore": "Read article",
+    "comments": "Comments",
+    "leaveComment": "Leave a comment",
+    "submitComment": "Post comment",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "Your email",
+    "bodyPlaceholder": "Share your thoughts...",
+    "commentPosted": "Comment posted and awaiting review."
+  },
+  "Auth": {
+    "loginTitle": "Welcome back",
+    "loginSubtitle": "Sign in to track your enrollments and project requests.",
+    "registerTitle": "Create your account",
+    "registerSubtitle": "Join to enroll in courses and request consultations.",
+    "name": "Full name",
+    "email": "Email",
+    "phone": "Phone (optional)",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "submitLogin": "Sign in",
+    "submitRegister": "Create account",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "register": "Create one",
+    "login": "Sign in",
+    "invalidCredentials": "Invalid email or password.",
+    "emailExists": "An account with this email already exists.",
+    "loggedOut": "You have been signed out."
+  },
+  "Dashboard": {
+    "title": "Your dashboard",
+    "kicker": "Account",
+    "welcome": "Welcome back, {name}",
+    "enrollmentsTitle": "Your courses",
+    "noEnrollments": "You haven't enrolled in any course yet.",
+    "browseCourses": "Browse courses",
+    "requestsTitle": "Your requests",
+    "noRequests": "No requests yet.",
+    "status": {
+      "NEW": "New",
+      "REVIEW": "In review",
+      "DONE": "Done",
+      "PENDING": "Pending",
+      "ACTIVE": "Active"
+    }
+  },
+  "Request": {
+    "title": "Request a consultation",
+    "kicker": "Start",
+    "subtitle": "Tell me about your project. I usually reply within one business day.",
+    "name": "Your name",
+    "email": "Email",
+    "phone": "Phone (optional)",
+    "type": "What do you need?",
+    "budget": "Budget range (optional)",
+    "message": "Project details",
+    "types": {
+      "consulting": "Market entry consulting",
+      "web": "Web or app design",
+      "training": "Backend training",
+      "ai": "AI & automation",
+      "review": "Architecture review"
+    },
+    "submit": "Send request",
+    "success": "Request received. I'll be in touch shortly.",
+    "dashboardCta": "You'll be able to track this request from your dashboard."
+  },
+  "Admin": {
+    "title": "Admin",
+    "overview": "Overview",
+    "requests": "Requests",
+    "enrollments": "Enrollments",
+    "users": "Users",
+    "posts": "Blog posts",
+    "courses": "Courses",
+    "newPost": "New post",
+    "newCourse": "New course",
+    "titleField": "Title",
+    "slugField": "Slug",
+    "excerptField": "Excerpt",
+    "bodyField": "Body",
+    "coverField": "Cover image",
+    "coverUpload": "Upload image",
+    "coverUrl": "Or paste an image URL",
+    "publishedField": "Published",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "notAllowed": "Admins only."
+  },
+  "Footer": {
+    "tagline": "Senior backend architect building AI-native software and teaching the next generation of engineers.",
+    "quickLinks": "Navigate",
+    "social": "Find me",
+    "rights": "All rights reserved.",
+    "madeWith": "Designed & engineered by Sajjad Mohammadi Nejad."
+  },
+  "Common": {
+    "languageSwitch": "فارسی",
+    "loading": "Loading...",
+    "required": "This field is required",
+    "back": "Back",
+    "readMore": "Read more",
+    "viewAll": "View all",
+    "email": "sajadweb7@gmail.com",
+    "phone": "+98 917 380 1153",
+    "location": "Tehran, Iran",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "twitter": "Twitter",
+    "instagram": "Instagram"
+  }
+}

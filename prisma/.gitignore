@@ -1,0 +1,5 @@
+# Prisma migrations
+migrations/
+migration_lock.toml
+*.db
+*.db-journal

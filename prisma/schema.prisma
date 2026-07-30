@@ -1,0 +1,159 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  phone     String?
+  password  String
+  role      String   @default("USER")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  enrollments Enrollment[]
+  requests    ServiceRequest[]
+  comments    BlogComment[]
+  posts       BlogPost[]
+}
+
+model Course {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  category    String
+  level       String
+  sortOrder   Int      @default(0)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  translations CourseTranslation[]
+  enrollments  Enrollment[]
+  modules      CourseModule[]
+}
+
+model CourseTranslation {
+  id        Int    @id @default(autoincrement())
+  courseId  Int
+  locale    String
+  title     String
+  excerpt   String
+  body      String
+  duration  String?
+
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([courseId, locale])
+}
+
+model CourseModule {
+  id          Int    @id @default(autoincrement())
+  courseId    Int
+  order       Int    @default(0)
+  payload     String
+
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+}
+
+model Enrollment {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  courseId  Int
+  status    String   @default("PENDING")
+  createdAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+}
+
+model ServiceRequest {
+  id        Int      @id @default(autoincrement())
+  userId    Int?
+  name      String
+  email     String
+  phone     String?
+  type      String
+  budget    String?
+  message   String
+  status    String   @default("NEW")
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
+
+model BlogPost {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  coverImage  String?
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  authorId    Int?
+
+  translations BlogPostTranslation[]
+  comments     BlogComment[]
+  author       User?                  @relation(fields: [authorId], references: [id], onDelete: SetNull)
+}
+
+model BlogPostTranslation {
+  id      Int    @id @default(autoincrement())
+  postId  Int
+  locale  String
+  title   String
+  excerpt String
+  body    String
+
+  post BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, locale])
+}
+
+model BlogComment {
+  id        Int      @id @default(autoincrement())
+  postId    Int
+  userId    Int?
+  name      String
+  email     String
+  body      String
+  createdAt DateTime @default(now())
+
+  post BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
+
+model Project {
+  id         Int      @id @default(autoincrement())
+  slug       String   @unique
+  coverImage String?
+  url        String?
+  role       String?
+  year       String?
+  published  Boolean  @default(true)
+  createdAt  DateTime @default(now())
+
+  translations ProjectTranslation[]
+}
+
+model ProjectTranslation {
+  id         Int    @id @default(autoincrement())
+  projectId  Int
+  locale     String
+  title      String
+  category   String
+  location   String?
+  excerpt    String
+  body       String
+  techStack  String
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, locale])
+}
