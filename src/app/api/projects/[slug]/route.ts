@@ -1,46 +1,54 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
 import { ensureAdminFromDb } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 import { slugify } from '@/lib/utils';
 
 const locales = ['en', 'fa'] as const;
 
-type BlogPayload = {
+type ProjectPayload = {
   slug?: string;
   coverImage?: string;
   coverUrl?: string;
+  url?: string;
+  role?: string;
+  year?: string;
   published?: boolean;
-  translations?: Partial<Record<(typeof locales)[number], { title?: string; excerpt?: string; body?: string }>>;
+  translations?: Partial<
+    Record<
+      (typeof locales)[number],
+      { title?: string; category?: string; location?: string; excerpt?: string; body?: string; techStack?: string }
+    >
+  >;
 };
 
 export async function GET(_req: NextRequest, ctx: { params: { slug: string } }) {
-  const post = await prisma.blogPost.findUnique({
+  const project = await prisma.project.findUnique({
     where: { slug: ctx.params.slug },
-    include: {
-      translations: true,
-      comments: { orderBy: { createdAt: 'desc' }, where: { userId: { not: undefined } } },
-    },
+    include: { translations: true },
   });
-  if (!post || !post.published) return NextResponse.json({ error: 'Not found' }, { status: 404 });
-  return NextResponse.json({ post });
+  if (!project || !project.published) return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  return NextResponse.json({ project });
 }
 
 export async function PATCH(req: NextRequest, ctx: { params: { slug: string } }) {
   try {
     await ensureAdminFromDb(req);
-    const body = (await req.json()) as BlogPayload;
+    const body = (await req.json()) as ProjectPayload;
     const nextSlug = body.slug ? slugify(body.slug) : ctx.params.slug;
 
     if (nextSlug !== ctx.params.slug) {
-      const exists = await prisma.blogPost.findUnique({ where: { slug: nextSlug } });
+      const exists = await prisma.project.findUnique({ where: { slug: nextSlug } });
       if (exists) return NextResponse.json({ error: 'Slug exists' }, { status: 409 });
     }
 
-    const post = await prisma.blogPost.update({
+    const project = await prisma.project.update({
       where: { slug: ctx.params.slug },
       data: {
         slug: nextSlug,
         coverImage: body.coverImage ?? body.coverUrl ?? null,
+        url: body.url || null,
+        role: body.role || null,
+        year: body.year || null,
         published: body.published ?? true,
       },
       include: { translations: true },
@@ -48,31 +56,37 @@ export async function PATCH(req: NextRequest, ctx: { params: { slug: string } })
 
     for (const locale of locales) {
       const input = body.translations?.[locale];
-      if (!input?.title && !input?.body && !input?.excerpt) continue;
-      await prisma.blogPostTranslation.upsert({
-        where: { postId_locale: { postId: post.id, locale } },
+      if (!input?.title && !input?.excerpt && !input?.body && !input?.category && !input?.techStack) continue;
+      await prisma.projectTranslation.upsert({
+        where: { projectId_locale: { projectId: project.id, locale } },
         update: {
           title: input.title || '',
+          category: input.category || '',
+          location: input.location || null,
           excerpt: input.excerpt || '',
           body: input.body || '',
+          techStack: input.techStack || '',
         },
         create: {
-          postId: post.id,
+          projectId: project.id,
           locale,
           title: input.title || '',
+          category: input.category || '',
+          location: input.location || null,
           excerpt: input.excerpt || '',
           body: input.body || '',
+          techStack: input.techStack || '',
         },
       });
     }
 
-    const updated = await prisma.blogPost.findUnique({
+    const updated = await prisma.project.findUnique({
       where: { slug: nextSlug },
       include: { translations: true },
     });
-    return NextResponse.json({ ok: true, post: updated });
+    return NextResponse.json({ ok: true, project: updated });
   } catch (e) {
-    console.error('[blog/update]', e);
+    console.error('[project/update]', e);
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
@@ -80,10 +94,10 @@ export async function PATCH(req: NextRequest, ctx: { params: { slug: string } })
 export async function DELETE(req: NextRequest, ctx: { params: { slug: string } }) {
   try {
     await ensureAdminFromDb(req);
-    await prisma.blogPost.delete({ where: { slug: ctx.params.slug } });
+    await prisma.project.delete({ where: { slug: ctx.params.slug } });
     return NextResponse.json({ ok: true });
   } catch (e) {
-    console.error('[blog/delete]', e);
+    console.error('[project/delete]', e);
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }

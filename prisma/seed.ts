@@ -72,7 +72,7 @@ async function main() {
     },
     {
       slug: 'sakok',
-      coverImage: '/legacy/assets/images/portfolio/sakok/hero.png',
+      coverImage: '/legacy/assets/images/portfolio/sakok/b1.jpeg',
       url: 'https://sakok.com',
       role: 'Chief Technology Officer',
       year: '2022',
@@ -144,7 +144,7 @@ async function main() {
     },
     {
       slug: '24ipay',
-      coverImage: '/legacy/assets/images/portfolio/ipay/hero.png',
+      coverImage: '/legacy/assets/images/portfolio/ipay/logo.png',
       url: 'https://24ipay.ir',
       role: 'Backend Developer → Team Lead',
       year: '2016',

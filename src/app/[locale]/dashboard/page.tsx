@@ -1,18 +1,25 @@
 import { redirect } from 'next/navigation';
-import { getLocale, getTranslations } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 import { DashboardClient } from './dashboard-client';
 import { getSession } from '@/lib/auth-server';
 import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 
-export async function generateMetadata() {
-  const t = await getTranslations('Dashboard');
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  const t = await getTranslations({ locale, namespace: 'Dashboard' });
   return { title: t('title') };
 }
 
-export default async function DashboardPage() {
-  const locale = await getLocale();
+export default async function DashboardPage({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
   const user = await getSession();
 
   if (!user) redirect(`/${locale}/login`);

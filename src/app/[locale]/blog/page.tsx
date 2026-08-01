@@ -1,15 +1,22 @@
-import { getLocale, getTranslations } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 import { prisma } from '@/lib/prisma';
 import { BlogListClient } from './blog-list-client';
 
-export async function generateMetadata() {
-  const t = await getTranslations('Blog');
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  const t = await getTranslations({ locale, namespace: 'Blog' });
   return { title: t('title') };
 }
 
-export default async function BlogPage() {
-  const locale = await getLocale();
-  const t = await getTranslations('Blog');
+export default async function BlogPage({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  const t = await getTranslations({ locale, namespace: 'Blog' });
 
   const posts = await prisma.blogPost.findMany({
     where: { published: true },

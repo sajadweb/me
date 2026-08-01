@@ -1,16 +1,23 @@
-import { getLocale, getTranslations } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 import { prisma } from '@/lib/prisma';
 import { CoursesClient } from './courses-client';
 import { Reveal } from '@/components/reveal';
 
-export async function generateMetadata() {
-  const t = await getTranslations('Courses');
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  const t = await getTranslations({ locale, namespace: 'Courses' });
   return { title: t('title') };
 }
 
-export default async function CoursesPage() {
-  const locale = await getLocale();
-  const t = await getTranslations('Courses');
+export default async function CoursesPage({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  const t = await getTranslations({ locale, namespace: 'Courses' });
   const courses = await prisma.course.findMany({
     where: { published: true },
     orderBy: { sortOrder: 'asc' },

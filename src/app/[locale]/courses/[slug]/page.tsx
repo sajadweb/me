@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getLocale, getTranslations } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 import { prisma } from '@/lib/prisma';
 
 export async function generateMetadata({
@@ -9,7 +9,7 @@ export async function generateMetadata({
 }) {
   const course = await prisma.course.findUnique({ where: { slug: params.slug } });
   if (!course) return {};
-  const t = await getTranslations('Courses');
+  const t = await getTranslations({ locale: params.locale, namespace: 'Courses' });
   return { title: course.slug === 'golang' ? t('golangTitle') : t('nestjsTitle') };
 }
 
@@ -18,7 +18,8 @@ export default async function CourseDetailPage({
 }: {
   params: { locale: string; slug: string };
 }) {
-  const locale = await getLocale();
+  const locale = params.locale;
+  const t = await getTranslations({ locale, namespace: 'Courses' });
   const course = await prisma.course.findUnique({
     where: { slug: params.slug },
     include: { translations: true, modules: { orderBy: { order: 'asc' } } },
@@ -46,7 +47,7 @@ export default async function CourseDetailPage({
 
       {course.modules.length > 0 && (
         <section className="mx-auto mt-16 max-w-3xl">
-          <h2 className="mb-6 text-xl font-bold">Modules</h2>
+          <h2 className="mb-6 text-xl font-bold">{t('modules')}</h2>
           <ol className="space-y-3">
             {course.modules.map((m, i) => {
               const data =

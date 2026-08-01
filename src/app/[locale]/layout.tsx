@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono, Vazirmatn } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
-import { getLocale, getMessages, getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import '../globals.css';
-import { locales } from '../../i18n';
+import { isLocale, loadMessages, locales } from '../../i18n';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
 import { SessionProvider } from '@/components/session-provider';
@@ -61,8 +61,9 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  if (!locales.includes(locale as (typeof locales)[number])) notFound();
-  const messages = await getMessages();
+  if (!isLocale(locale)) notFound();
+  setRequestLocale(locale);
+  const messages = await loadMessages(locale);
   const dir = locale === 'fa' ? 'rtl' : 'ltr';
 
   return (

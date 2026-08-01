@@ -1,13 +1,21 @@
 import { getTranslations } from 'next-intl/server';
 import { RequestForm } from './request-form';
 
-export async function generateMetadata() {
-  const t = await getTranslations('Request');
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  const t = await getTranslations({ locale, namespace: 'Request' });
   return { title: t('title') };
 }
 
-export default async function RequestPage() {
-  const t = await getTranslations('Request');
+export default async function RequestPage({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  const t = await getTranslations({ locale, namespace: 'Request' });
   return (
     <div className="container-x min-h-screen py-28">
       <div className="mx-auto max-w-2xl text-center">

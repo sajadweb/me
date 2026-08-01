@@ -9,6 +9,7 @@ const nextConfig = {
       { protocol: 'https', hostname: 'sajadweb.github.io' },
       { protocol: 'https', hostname: 'images.unsplash.com' },
       { protocol: 'https', hostname: '**' },
+      { protocol: 'http', hostname: '**' },
     ],
   },
   webpack: (config) => {

@@ -3,6 +3,43 @@ import { prisma } from '@/lib/prisma';
 import { ensureAdminFromDb } from '@/lib/auth';
 import { slugify } from '@/lib/utils';
 
+const locales = ['en', 'fa'] as const;
+
+type LocalizedText = {
+  title?: string;
+  excerpt?: string;
+  body?: string;
+};
+
+type BlogPayload = {
+  title?: string;
+  slug?: string;
+  excerpt?: string;
+  body?: string;
+  coverImage?: string;
+  coverUrl?: string;
+  locale?: string;
+  published?: boolean;
+  translations?: Partial<Record<(typeof locales)[number], LocalizedText>>;
+};
+
+function normalizeTranslations(body: BlogPayload) {
+  const sourceLocale = body.locale === 'fa' ? 'fa' : 'en';
+  const source = body.translations?.[sourceLocale] ?? {};
+  const fallbackTitle = source.title || body.title || body.translations?.en?.title || body.translations?.fa?.title;
+  const fallbackBody = source.body || body.body || body.translations?.en?.body || body.translations?.fa?.body;
+  const fallbackExcerpt = source.excerpt || body.excerpt || body.translations?.en?.excerpt || body.translations?.fa?.excerpt || '';
+
+  if (!fallbackTitle || !fallbackBody) return null;
+
+  return locales.map((locale) => ({
+    locale,
+    title: body.translations?.[locale]?.title || fallbackTitle,
+    excerpt: body.translations?.[locale]?.excerpt || fallbackExcerpt,
+    body: body.translations?.[locale]?.body || fallbackBody,
+  }));
+}
+
 export async function GET() {
   const posts = await prisma.blogPost.findMany({
     where: { published: true },
@@ -15,22 +52,14 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     await ensureAdminFromDb(req);
-    const body = (await req.json()) as {
-      title?: string;
-      slug?: string;
-      excerpt?: string;
-      body?: string;
-      coverImage?: string;
-      locale?: string;
-      published?: boolean;
-    };
+    const body = (await req.json()) as BlogPayload;
+    const translations = normalizeTranslations(body);
 
-    if (!body.title || !body.body) {
+    if (!translations) {
       return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
     }
 
-    const locale = body.locale || 'en';
-    const slug = body.slug ? slugify(body.slug) : slugify(body.title);
+    const slug = body.slug ? slugify(body.slug) : slugify(translations[0].title);
 
     const exists = await prisma.blogPost.findUnique({ where: { slug } });
     const finalSlug = exists ? `${slug}-${Date.now().toString(36)}` : slug;
@@ -38,15 +67,10 @@ export async function POST(req: NextRequest) {
     const post = await prisma.blogPost.create({
       data: {
         slug: finalSlug,
-        coverImage: body.coverImage || null,
+        coverImage: body.coverImage || body.coverUrl || null,
         published: body.published ?? true,
         translations: {
-          create: {
-            locale,
-            title: body.title,
-            excerpt: body.excerpt || '',
-            body: body.body,
-          },
+          create: translations,
         },
       },
       include: { translations: true },

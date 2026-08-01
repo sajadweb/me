@@ -5,14 +5,18 @@ import { Process } from '@/components/process';
 import { PortfolioPreview } from '@/components/portfolio-preview';
 import { CtaBand } from '@/components/cta-band';
 
-export default function HomePage() {
+export default function HomePage({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
   return (
     <>
       <Hero />
       <About />
       <Services />
       <Process />
-      <PortfolioPreview />
+      <PortfolioPreview locale={locale} />
       <CtaBand />
     </>
   );

@@ -1,5 +1,6 @@
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { getLocale, getTranslations } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 import { prisma } from '@/lib/prisma';
 import { estimateReadTime } from '@/lib/utils';
 
@@ -20,8 +21,8 @@ export default async function BlogPostPage({
 }: {
   params: { locale: string; slug: string };
 }) {
-  const locale = await getLocale();
-  const t = await getTranslations('Blog');
+  const locale = params.locale;
+  const t = await getTranslations({ locale, namespace: 'Blog' });
 
   const post = await prisma.blogPost.findUnique({
     where: { slug: params.slug },
@@ -47,16 +48,19 @@ export default async function BlogPostPage({
             month: 'long',
             day: 'numeric',
           })}{' '}
-          · {estimateReadTime(tr?.body || '')} min read
+          · {t('minRead', { minutes: estimateReadTime(tr?.body || '') })}
         </p>
 
         {post.coverImage && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={post.coverImage}
-            alt={tr?.title}
-            className="mt-8 aspect-[16/9] w-full rounded-2xl border border-white/10 object-cover"
-          />
+          <div className="relative mt-8 aspect-[16/9] w-full overflow-hidden rounded-2xl border border-white/10">
+            <Image
+              src={post.coverImage}
+              alt={tr?.title ?? post.slug}
+              fill
+              sizes="(min-width: 1024px) 768px, 100vw"
+              className="object-cover"
+            />
+          </div>
         )}
 
         <div

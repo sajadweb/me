@@ -1,10 +1,11 @@
-import { getLocale, getTranslations } from 'next-intl/server';
+import Image from 'next/image';
+import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 import { Reveal } from './reveal';
 import { getFeaturedProjects } from '@/lib/queries';
 
-export async function PortfolioPreview() {
-  const t = await getTranslations('Portfolio');
-  const locale = await getLocale();
+export async function PortfolioPreview({ locale }: { locale: string }) {
+  const t = await getTranslations({ locale, namespace: 'Portfolio' });
   const projects = await getFeaturedProjects(locale);
 
   return (
@@ -21,14 +22,15 @@ export async function PortfolioPreview() {
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((p, i) => (
             <Reveal key={p.id} delay={i * 80}>
-              <article className="glass-card group h-full p-0 overflow-hidden">
+              <Link href={`/${locale}/projects/${p.slug}`} className="glass-card group block h-full overflow-hidden p-0">
                 <div className="relative aspect-[16/10] overflow-hidden">
                   {p.coverImage ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
+                    <Image
                       src={p.coverImage}
                       alt={p.title}
-                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   ) : (
                     <div className="h-full w-full bg-gradient-to-br from-accent/20 to-violet/20" />
@@ -58,7 +60,7 @@ export async function PortfolioPreview() {
                     </div>
                   )}
                 </div>
-              </article>
+              </Link>
             </Reveal>
           ))}
         </div>
